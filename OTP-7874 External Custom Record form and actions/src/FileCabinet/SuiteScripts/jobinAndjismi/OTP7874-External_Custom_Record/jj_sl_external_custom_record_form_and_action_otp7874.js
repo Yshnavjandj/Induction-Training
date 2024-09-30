@@ -2,11 +2,37 @@
  * @NApiVersion 2.1
  * @NScriptType Suitelet
  */
+/*******************************************************************************************************************
+ * 
+ * OTP-7874: External Custom Record Form and Actions
+ * 
+ * Author: Jobin And Jismi IT Services
+ * 
+ * *****************************************************************************************************************
+ * 
+ * Date created: 27-September-2024
+ * 
+ * Description: This script is for sending email notifications to netsuite admin and sales rep if a new custom record is created.
+ * 
+ * RVISION HISTORY 1.0
+ * 
+ *******************************************************************************************************************
+ */
 define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
     /**
  * @param{record} record
  */
     (record,serverWidget,search,url,email) => {
+
+        /**
+        * @param {Object} scriptContext - The context object provided by NetSuite containing the request and response objects.
+        * @param {Object} scriptContext.request - The HTTP request object.
+        * @param {Object} scriptContext.response - The HTTP response object.
+        *
+        * @returns {void} This function does not return any value.
+        *
+        * @throws {Error} Throws an error if any issue occurs during the process, and logs the error details.
+         */
 
         const createCustomRecord = (scriptContext) => {
             try {
@@ -26,7 +52,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                         id: 'custpage_jj_email',
                         label: 'Customer Email',
                         type: serverWidget.FieldType.EMAIL
-                    });
+                    }).isMandatory = true;
 
                     form.addField({
                         id: 'custpage_jj_subject',
@@ -54,7 +80,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                     let cusEmail = scriptContext.request.parameters.custpage_jj_email;
                     let name = scriptContext.request.parameters.custpage_jj_name;
                     let subject = scriptContext.request.parameters.custpage_jj_subject;
-                    let message = scriptContext.request.parameters.custpage_jj_msg;
+                    let suiteletMessage = scriptContext.request.parameters.custpage_jj_msg;
                     
                     // search to check whther any customer with provided email id.
                     let customerSearch = search.create({
@@ -72,13 +98,18 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                         end: 1
                     });
 
-                    let selectedCustomer = searchResult[0].id; //customer id
+                    let selectedCustomer;
+                    let customerRecordLink;
 
-                    let customerRecordLink = url.resolveRecord({
-                        recordType: 'customer',
-                        recordId: selectedCustomer,
-                        isEditMode: true
-                    });
+                    if(searchResult.length > 0) {
+                        selectedCustomer = searchResult[0].id; //customer id
+
+                        customerRecordLink = url.resolveRecord({
+                            recordType: 'customer',
+                            recordId: selectedCustomer,
+                            isEditMode: true
+                        });
+                    }
 
                     // Check for duplicate record
                     let cusRecordSearch = search.create({
@@ -106,7 +137,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
 
                     log.debug("flag: ",flag);
 
-                    let responseBody;
+                    let notification;
 
                     if(flag === 0) {
                         let customRecord = record.create({
@@ -130,7 +161,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
     
                         customRecord.setValue({
                             fieldId: 'custrecord_jj_message',
-                            value: message
+                            value: suiteletMessage
                         });
     
                         if(selectedCustomer) {
@@ -139,7 +170,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                                 value: customerRecordLink
                             });
                         }
-    
+
                         let newRecordId = customRecord.save();
     
                         let salesrep = searchResult.map(result => {
@@ -156,35 +187,37 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                                 author: 7,
                                 recipients: -5,
                                 subject: subject,
-                                body: message
+                                body: suiteletMessage
                             });
 
-                            responseBody = `<h2>Successfully sent an email to NetSuite admin</h2>`;
+                            notification = `<h2>Successfully sent an email to NetSuite admin</h2>`;
 
                             if(salesrep[0] && salesrep[0] !== -5) {
                                 email.send({
                                     author: 7,
                                     recipients: salesrep[0],
                                     subject: subject,
-                                    body: message
+                                    body: suiteletMessage
                                 });
-                                responseBody = `<h2>Successfully sent an email to NetSuite admin and sales rep</h2>`;
+
+                                notification = `<h2>Successfully sent an email to NetSuite admin and sales rep</h2>`;
+                                
                             }
                         }
                     }else {
-                        responseBody = `<h2>!!! Can't create new record. Already have the same custom record !!!</h2>`
+                        notification = `<h2>!!! Can't create new record. Already have the same custom record !!!</h2>`
                     }
 
                     scriptContext.response.write({
-                        output: responseBody
+                        output: notification
                     });
                     
                 }
                 
             } catch (error) {
-                log.debug("error: ",error);
-                log.debug("message: ",error.message);
-                log.debug("cause: ",error.cause);
+                log.error("error: ",error);
+                log.error("message: ",error.message);
+                log.error("cause: ",error.cause);
             }
         }
         /**
@@ -195,7 +228,7 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
          * @since 2015.2
          */
         const onRequest = (scriptContext) => {
-            createCustomRecord(scriptContext)
+            createCustomRecord(scriptContext);
         }
 
         return {onRequest}
