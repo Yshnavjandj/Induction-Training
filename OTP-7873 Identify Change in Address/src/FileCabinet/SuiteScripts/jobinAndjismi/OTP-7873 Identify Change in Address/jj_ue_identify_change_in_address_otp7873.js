@@ -2,16 +2,37 @@
  * @NApiVersion 2.1
  * @NScriptType UserEventScript
  */
+/*******************************************************************************************************************
+ * 
+ * OTP-7873: Identify change in Address
+ * 
+ * Author: Jobin And Jismi IT Services
+ * 
+ * *****************************************************************************************************************
+ * 
+ * Date created: 30-September-2024
+ * 
+ * Description: This script is for identifying whether a new address is added or existing address is changed.
+ * 
+ * RVISION HISTORY 1.0
+ * 
+ *******************************************************************************************************************
+ */
 define(['N/record'],
     /**
  * @param{record} record
  */
     (record) => {
+
         /**
          * Checks whether the address is changed or new address is added and check or uncheck the custom box accordingly.
          * @param {Object} scriptContext 
+         * @param {string} scriptContext.type - Trigger type; use values from the context.UserEventType enum
+         * @param {Record} scriptContext.newRecord - New record
+         * @param {Record} scriptContext.oldRecord - Old record
          * @return {Boolean} returns true or false
          */
+
         const checkBox = (scriptContext) => {
             try {
                 if(scriptContext.type === 'edit') {
