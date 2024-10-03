@@ -1,0 +1,4 @@
+<manifest projecttype="ACCOUNTCUSTOMIZATION">
+  <projectname>OTP-7875 Custom form to store blood donor details and track them in database</projectname>
+  <frameworkversion>1.0</frameworkversion>
+</manifest>
