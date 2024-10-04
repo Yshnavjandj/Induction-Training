@@ -1,0 +1,31 @@
+<suitelet scriptid="customscript_jj_sl_bld_dnr_form_otp7875">
+  <description></description>
+  <isinactive>F</isinactive>
+  <name>JJ SL Blood Donor Form OTP-7875</name>
+  <notifyadmins>F</notifyadmins>
+  <notifyemails></notifyemails>
+  <notifyowner>T</notifyowner>
+  <notifyuser>F</notifyuser>
+  <scriptfile>[/SuiteScripts/jobinAndjismi/OTP7875 blood_donor_form/jj_sl_blood_donor_form_otp7875.js]</scriptfile>
+  <scriptdeployments>
+    <scriptdeployment scriptid="customdeploy_jj_sl_bld_dnr_form_otp7875">
+      <allemployees>F</allemployees>
+      <allpartners>F</allpartners>
+      <allroles>F</allroles>
+      <audslctrole></audslctrole>
+      <eventtype></eventtype>
+      <isdeployed>T</isdeployed>
+      <isonline>F</isonline>
+      <loglevel>DEBUG</loglevel>
+      <runasrole></runasrole>
+      <status>TESTING</status>
+      <title>JJ SL Blood Donor Form OTP-7875</title>
+      <links>
+        <link>
+          <linkcategory>BASICSUPPORTCUSTOM</linkcategory>
+          <linklabel>Blood Donor Form</linklabel>
+        </link>
+      </links>
+    </scriptdeployment>
+  </scriptdeployments>
+</suitelet>
