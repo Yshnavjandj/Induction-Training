@@ -186,26 +186,27 @@ define(['N/record','N/ui/serverWidget','N/search','N/url','N/email'],
                             email.send({
                                 author: 7,
                                 recipients: -5,
-                                subject: subject,
-                                body: suiteletMessage
+                                subject: `${subject ? subject : 'No subject'}`,
+                                body: `${suiteletMessage ? suiteletMessage : 'No body'}`
                             });
 
-                            notification = `<h2>Successfully sent an email to NetSuite admin</h2>`;
+                            notification = `<script>alert("Record is created. Successfully sent an email to NetSuite admin")</script><h2>Successfully sent an email to NetSuite admin</h2><div><h3>Customer name: ${name ? name : ''}</h3><h3>Customer email: ${cusEmail}</h3><h3>Subject: ${subject ? subject : ''}</h3><h3>Message: ${suiteletMessage ? suiteletMessage : ''}</h3></div>`;
 
                             if(salesrep[0] && salesrep[0] !== -5) {
+
                                 email.send({
                                     author: 7,
                                     recipients: salesrep[0],
-                                    subject: subject,
-                                    body: suiteletMessage
+                                    subject: `${subject ? subject : 'No subject'}`,
+                                    body: `${suiteletMessage ? suiteletMessage : 'No body'}`
                                 });
 
-                                notification = `<h2>Successfully sent an email to NetSuite admin and sales rep</h2>`;
+                                notification = `<script>alert("Record is created. Successfully sent an email to NetSuite admin")</script><h2>Successfully sent an email to NetSuite admin and sales rep</h2><div><h3>Customer name: ${name ? name : ''}</h3><h3>Customer email: ${cusEmail ? cusEmail : ''}</h3><h3>Subject: ${subject ? subject : ''}</h3><h3>Message: ${suiteletMessage ? suiteletMessage : ''}</h3></div>`;
                                 
                             }
                         }
                     }else {
-                        notification = `<h2>!!! Can't create new record. Already have the same custom record !!!</h2>`
+                        notification = `<script>alert("Can't create new record. Already have the same custom record")</script><h2>!!! Can't create new record. Already have the same custom record !!!</h2>`;
                     }
 
                     scriptContext.response.write({
