@@ -1,0 +1,4 @@
+<manifest projecttype="ACCOUNTCUSTOMIZATION">
+  <projectname>OTP-7923 Display Sales Order Based on the Status</projectname>
+  <frameworkversion>1.0</frameworkversion>
+</manifest>
