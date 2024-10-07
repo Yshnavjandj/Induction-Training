@@ -20,11 +20,11 @@
  * 
  *******************************************************************************************************************
  */
-define(['N/search'],
+define(['N/search','N/ui/message'],
 /**
  * @param{search} search
  */
-function(search) {
+function(search,message) {
 
     /**
      * Restricts the fulfillment of a Sales Order based on attached Customer Deposits.
@@ -94,15 +94,45 @@ function(search) {
 
             console.log("sales order amount",salesOrderAmount);
 
+            let myMsg;
+
             if(depositAmount) {
                 if(depositAmount >= salesOrderAmount) {
-                    console.log("deposit amount greater than or equal to sales order amount");
+
+                    myMsg = message.create({
+                        title: 'Record saved',
+                        message: 'Item fulfillment record is saved successfully.',
+                        type: message.Type.CONFIRMATION
+                    });
+
+                    myMsg.show({
+                        duration: 10000
+                    });
+
                     return true;
                 }else {
-                    console.log("deposit amount is less than sales order amount");
+
+                    myMsg = message.create({
+                        title: 'Record is not saved',
+                        message: 'Deposit amount is less than sales order amount.',
+                        type: message.Type.ERROR
+                    });
+
+                    myMsg.show({
+                        duration: 10000
+                    });
                 }
             }else {
-                console.log("There is no customer deposit");
+
+                myMsg = message.create({
+                    title: 'Record is not saved',
+                    message: 'There is no customer deposit record associated with the sales order.',
+                    type: message.Type.ERROR
+                });
+
+                myMsg.show({
+                    duration: 10000
+                });
             }
 
             return false;
