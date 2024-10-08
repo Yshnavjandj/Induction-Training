@@ -1,4 +1,4 @@
-<customrecordtype scriptid="customrecordjj_blood_donor_form">
+<customrecordtype scriptid="customrecord_jj_blood_donor_form">
   <accesstype>CUSTRECORDENTRYPERM</accesstype>
   <allowattachments>T</allowattachments>
   <allowinlinedeleting>F</allowinlinedeleting>

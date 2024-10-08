@@ -53,11 +53,13 @@ define(['N/record','N/ui/serverWidget','N/format'],
                         type: serverWidget.FieldType.TEXT
                     }).isMandatory = true;
 
-                    form.addField({
+                    let genderSelect = form.addField({
                         id: 'custpage_jj_gender',
                         label: 'Gender',
-                        type: serverWidget.FieldType.TEXT
-                    }).isMandatory = true;
+                        type: serverWidget.FieldType.SELECT
+                    });
+
+                    genderSelect.isMandatory = true;
 
                     form.addField({
                         id: 'custpage_jj_phone',
@@ -78,6 +80,26 @@ define(['N/record','N/ui/serverWidget','N/format'],
                         label: 'Last Donation Date',
                         type: serverWidget.FieldType.DATE
                     }).isMandatory = true;
+
+                    genderSelect.addSelectOption({
+                        value: '',
+                        text: ''
+                    });
+
+                    genderSelect.addSelectOption({
+                        value: 'male',
+                        text: 'Male'
+                    });
+
+                    genderSelect.addSelectOption({
+                        value: 'female',
+                        text: 'Female'
+                    });
+
+                    genderSelect.addSelectOption({
+                        value: 'other',
+                        text: 'Other'
+                    });
 
                     bloodGroup.addSelectOption({
                         value: '',
@@ -128,6 +150,8 @@ define(['N/record','N/ui/serverWidget','N/format'],
                         label: 'Submit'
                     });
 
+                    form.clientScriptModulePath = './jj_cs_blood_donor_form_otp7875.js';
+
                     scriptContext.response.writePage({
                         pageObject: form
                     });
@@ -148,7 +172,7 @@ define(['N/record','N/ui/serverWidget','N/format'],
                     log.debug("type of date: ",typeof(parsedDate));
 
                     let bloodDonorRecord = record.create({
-                        type: 'customrecordjj_blood_donor_form'
+                        type: 'customrecord_jj_blood_donor_form'
                     });
 
                     bloodDonorRecord.setText({
