@@ -19,11 +19,11 @@
  * 
  *******************************************************************************************************************
  */
-define(['N/record','N/ui/serverWidget','N/format'],
+define(['N/record','N/ui/serverWidget','N/format','N/search'],
     /**
  * @param{record} record
  */
-    (record,serverWidget,format) => {
+    (record,serverWidget,format,search) => {
 
         /**
          * Creates a custom form
@@ -31,7 +31,7 @@ define(['N/record','N/ui/serverWidget','N/format'],
          * @param {ServerRequest} scriptContext.request - Incoming request
          * @param {ServerResponse} scriptContext.response - Suitelet response 
          * @returns {void} This function does not return any value
-         */
+         */ 
 
         const bloodDonorForm = (scriptContext) => {
             try {
@@ -169,57 +169,79 @@ define(['N/record','N/ui/serverWidget','N/format'],
                         type: format.Type.DATE
                     });
 
-                    log.debug("type of date: ",typeof(parsedDate));
-
-                    let bloodDonorRecord = record.create({
-                        type: 'customrecord_jj_blood_donor_form'
+                    let dupeSearch = search.create({
+                        type: 'customrecord_jj_blood_donor_form',
+                        filters: [{
+                            name: 'custrecord_jj_phone_number',
+                            operator: 'is',
+                            values: phone
+                        }],
+                        columns: ['custrecord_jj_phone_number']
                     });
 
-                    bloodDonorRecord.setText({
-                        fieldId: 'custrecordjj_first_name',
-                        text: firstName
+                    let dupeSearchResult = dupeSearch.run().getRange({
+                        start: 0,
+                        end: 1
                     });
 
-                    bloodDonorRecord.setText({
-                        fieldId: 'custrecordjj_last_name',
-                        text: lastName
-                    });
+                    if(dupeSearchResult.length > 0) {
 
-                    bloodDonorRecord.setText({
-                        fieldId: 'custrecordjj_gender',
-                        text: gender
-                    });
+                        scriptContext.response.write({
+                            output: `<h2>Can't create record. There exist a duplicate record.</h2>`
+                        });
 
-                    bloodDonorRecord.setValue({
-                        fieldId: 'custrecordjj_phone_number',
-                        value: phone
-                    });
-
-                    bloodDonorRecord.setText({
-                        fieldId: 'custrecordjj_blood_group',
-                        text: bloodGroup
-                    });
-
-                    bloodDonorRecord.setValue({
-                        fieldId: 'custrecordjj_last_donation_date',
-                        value: parsedDate
-                    });
-
-                    let id = bloodDonorRecord.save();
-
-                    let output;
-
-                    log.debug("id: ",id);
-
-                    if(id) {
-                        output = `<h2>Blood donor record created suceesfully.</h2>`;
                     }else {
-                        output = `<h2>Blood donor record didn't created.</h2>`;
+                        let bloodDonorRecord = record.create({
+                            type: 'customrecord_jj_blood_donor_form'
+                        });
+    
+                        bloodDonorRecord.setText({
+                            fieldId: 'custrecord_jj_first_name',
+                            text: firstName
+                        });
+    
+                        bloodDonorRecord.setText({
+                            fieldId: 'custrecord_jj_last_name',
+                            text: lastName
+                        });
+    
+                        bloodDonorRecord.setText({
+                            fieldId: 'custrecord_jj_gender',
+                            text: gender
+                        });
+    
+                        bloodDonorRecord.setValue({
+                            fieldId: 'custrecord_jj_phone_number',
+                            value: phone
+                        });
+    
+                        bloodDonorRecord.setText({
+                            fieldId: 'custrecord_jj_blood_group',
+                            text: bloodGroup
+                        });
+    
+                        bloodDonorRecord.setValue({
+                            fieldId: 'custrecord_jj_last_donation_date',
+                            value: parsedDate
+                        });
+    
+                        let id = bloodDonorRecord.save();
+    
+                        let output;
+    
+                        log.debug("id: ",id);
+    
+                        if(id) {
+                            output = `<h2>Blood donor record created suceesfully.</h2>`;
+                        }else {
+                            output = `<h2>Blood donor record didn't created.</h2>`;
+                        }
+    
+                        scriptContext.response.write({
+                            output: output
+                        });
                     }
-
-                    scriptContext.response.write({
-                        output: output
-                    });
+                    
                 }
             } catch (error) {
                 log.error("error: ",error);
@@ -242,4 +264,4 @@ define(['N/record','N/ui/serverWidget','N/format'],
 
         return {onRequest}
 
-    });
+});

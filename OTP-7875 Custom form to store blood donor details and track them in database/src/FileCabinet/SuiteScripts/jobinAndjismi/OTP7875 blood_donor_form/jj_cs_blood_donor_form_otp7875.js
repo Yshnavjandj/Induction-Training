@@ -24,6 +24,36 @@ define([],
 
 function() {
 
+    /**
+     * Safely sets the field value and prevents the recursive call to fieldChanged.
+     * @param {Object} scriptContext
+     * @param {string} fieldId - The field that needs to be updated
+     * @param {any} value - The value to set
+     * @returns {void}
+     */
+
+    const isFieldChanged = (scriptContext,fieldId,value) => {
+        try {
+            if(!scriptContext.currentRecord._bool) {
+
+                scriptContext.currentRecord._bool = true
+
+                alert("Enter a valid phone number.");
+
+                scriptContext.currentRecord.setValue({
+                    fieldId: fieldId,
+                    value: value
+                });
+
+                scriptContext.currentRecord._bool = false;
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    // let isChanged = false;
+
      /**
      * Creates a custom form
      * @param {Object} scriptContext
@@ -34,6 +64,7 @@ function() {
 
     const restrictFutureDate = (scriptContext) => {
         try {
+
             if(scriptContext.fieldId === 'custpage_jj_date') {
 
                 let today = new Date();
@@ -52,10 +83,28 @@ function() {
                     });
                 }
             }
+
+            if(scriptContext.fieldId === 'custpage_jj_phone') {
+
+                let phoneNumber = scriptContext.currentRecord.getValue({
+                    fieldId: 'custpage_jj_phone'
+                });
+
+                if(phoneNumber.length !== 10) {
+
+                    isFieldChanged(scriptContext,'custpage_jj_phone','');
+
+                    let ph = scriptContext.currentRecord.getValue({
+                        fieldId: 'custpage_jj_phone'
+                    });
+
+                    console.log("phone number: ",ph);
+                }
+            }
         } catch (error) {
-            console.log(error);
-            console.log(error.message);
-            console.log(error.cause);
+            console.error(error);
+            console.error(error.message);
+            console.error(error.cause);
         }
     }
     
@@ -73,7 +122,11 @@ function() {
      * @since 2015.2
      */
     function fieldChanged(scriptContext) {
-        restrictFutureDate(scriptContext);
+        try {
+            restrictFutureDate(scriptContext);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return {

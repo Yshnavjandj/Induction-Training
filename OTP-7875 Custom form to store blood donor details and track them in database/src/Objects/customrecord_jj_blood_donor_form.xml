@@ -40,7 +40,7 @@
   <showownerallowchange>F</showownerallowchange>
   <showowneronlist>F</showowneronlist>
   <customrecordcustomfields>
-    <customrecordcustomfield scriptid="custrecordjj_first_name">
+    <customrecordcustomfield scriptid="custrecord_jj_first_name">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -56,7 +56,7 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>TEXT</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays first name of the donor.</help>
+      <help>Enter first name of the blood donor.</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
@@ -79,7 +79,7 @@
       <storevalue>T</storevalue>
       <subtab></subtab>
     </customrecordcustomfield>
-    <customrecordcustomfield scriptid="custrecordjj_last_name">
+    <customrecordcustomfield scriptid="custrecord_jj_last_name">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -95,7 +95,7 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>TEXT</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays last name of the donor.</help>
+      <help>Enter last name of the blood donor.</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
@@ -118,7 +118,7 @@
       <storevalue>T</storevalue>
       <subtab></subtab>
     </customrecordcustomfield>
-    <customrecordcustomfield scriptid="custrecordjj_gender">
+    <customrecordcustomfield scriptid="custrecord_jj_gender">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -134,7 +134,7 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>TEXT</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays gender of the donor.</help>
+      <help>Select gender.</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
@@ -157,7 +157,7 @@
       <storevalue>T</storevalue>
       <subtab></subtab>
     </customrecordcustomfield>
-    <customrecordcustomfield scriptid="custrecordjj_phone_number">
+    <customrecordcustomfield scriptid="custrecord_jj_phone_number">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -173,11 +173,11 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>PHONE</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays phone number of the blood donor.</help>
+      <help>Enter phone number.</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
-      <label>Phone number</label>
+      <label>Phone Number</label>
       <linktext></linktext>
       <maxlength></maxlength>
       <maxvalue></maxvalue>
@@ -196,7 +196,7 @@
       <storevalue>T</storevalue>
       <subtab></subtab>
     </customrecordcustomfield>
-    <customrecordcustomfield scriptid="custrecordjj_blood_group">
+    <customrecordcustomfield scriptid="custrecord_jj_blood_group">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -212,7 +212,7 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>TEXT</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays blood group of the donor.</help>
+      <help>Select blood group</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
@@ -235,7 +235,7 @@
       <storevalue>T</storevalue>
       <subtab></subtab>
     </customrecordcustomfield>
-    <customrecordcustomfield scriptid="custrecordjj_last_donation_date">
+    <customrecordcustomfield scriptid="custrecord_jj_last_donation_date">
       <accesslevel>2</accesslevel>
       <allowquickadd>F</allowquickadd>
       <applyformatting>F</applyformatting>
@@ -251,7 +251,7 @@
       <encryptatrest>F</encryptatrest>
       <fieldtype>DATE</fieldtype>
       <globalsearch>F</globalsearch>
-      <help>Displays the last date of blood donation.</help>
+      <help>Enter last donation date.</help>
       <isformula>F</isformula>
       <ismandatory>F</ismandatory>
       <isparent>F</isparent>
