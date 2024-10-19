@@ -190,10 +190,16 @@ function(search, format) {
                         value: `${cls ? cls : ' '}`
                     });
 
+                    let taxValue = result.getValue({ name: 'taxtotal' });
+
+                    let totalValue = result.getValue({ name: 'total' });
+
+                    let subTotal = totalValue - taxValue;
+
                     currRecord.setCurrentSublistValue({
                         sublistId: 'so_sublist',
                         fieldId: 'subtotal', 
-                        value: String(result.getValue({ name: 'amount' }))
+                        value: String(subTotal)
                     });
 
                     let taxAmount = String(result.getValue({ name: 'taxtotal' }));
@@ -201,7 +207,7 @@ function(search, format) {
                     currRecord.setCurrentSublistValue({
                         sublistId: 'so_sublist',
                         fieldId: 'tax', 
-                        value: `${taxAmount ? taxAmount : ' '}`
+                        value: `${taxAmount ? taxAmount : '0.00'}`
                     });
 
                     currRecord.setCurrentSublistValue({

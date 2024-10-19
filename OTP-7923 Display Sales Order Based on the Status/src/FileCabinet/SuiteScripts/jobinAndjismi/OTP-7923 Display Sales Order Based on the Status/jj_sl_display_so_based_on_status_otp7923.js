@@ -41,6 +41,7 @@ define(['N/ui/serverWidget','N/search','N/format'],
         const displaySalesOrder = (scriptContext) => {
             try {
                 if(scriptContext.request.method === 'GET') {
+                    
                     let form = serverWidget.createForm({
                         title: 'Sales Order Page'
                     });
@@ -207,7 +208,7 @@ define(['N/ui/serverWidget','N/search','N/format'],
                     let salesOrderSearch = search.create({
                         type: search.Type.SALES_ORDER,
                         filters: searchFilters,
-                        columns: ['internalid','tranid','trandate','status','entity','subsidiary','department','class','amount','taxtotal','total']
+                        columns: ['internalid','tranid','trandate','status','entity','subsidiary','department','class','taxtotal','total']
                     });
 
                     let resultArray = salesOrderSearch.run().getRange({
@@ -281,18 +282,24 @@ define(['N/ui/serverWidget','N/search','N/format'],
                             value: `${cls ? cls : ' '}`
                         });
 
-                        sublist.setSublistValue({
-                            id: 'subtotal', 
-                            line: index,
-                            value: String(result.getValue({ name: 'amount' }))
-                        });
+                        let taxValue = result.getValue({ name: 'taxtotal' });
+
+                        let totalValue = result.getValue({ name: 'total' });
+
+                        let subTotal = totalValue - taxValue;
 
                         let taxAmount = String(result.getValue({ name: 'taxtotal' }));
 
                         sublist.setSublistValue({
+                            id: 'subtotal', 
+                            line: index,
+                            value: String(subTotal)
+                        });
+
+                        sublist.setSublistValue({
                             id: 'tax', 
                             line: index,
-                            value: `${taxAmount ? taxAmount : ' '}`
+                            value: `${taxAmount ? taxAmount : '0.00'}`
                         });
 
                         sublist.setSublistValue({
