@@ -26,6 +26,17 @@ define(['N/search','N/format'],
  */
 function(search,format) {
 
+    /**
+     * Applies filters to a sublist based on selected values from custom fields.
+     *
+     * @param {Object} scriptContext - The context in which the script is executed.
+     * @param {Object} scriptContext.currentRecord - The current record being worked on.
+     * @param {string} scriptContext.fieldId - The ID of the field being changed.
+     *
+     * @returns {void} This function does not return any value.
+     * @throws {Error} Will log any error that occurs during the execution of the script.
+    */
+
     const applyFilters = (scriptContext) => {
         try {
             if(scriptContext.fieldId === 'custpage_jj_bld_grp' || scriptContext.fieldId === 'custpage_jj_date') {

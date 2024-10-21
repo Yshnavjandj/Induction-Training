@@ -26,6 +26,17 @@ define(['N/search', 'N/ui/serverWidget','N/format'],
  */
     (search, serverWidget,format) => {
 
+        /**
+         *  Displays a form to search and list eligible blood donors.
+         * @param {Object} scriptContext - The context in which the script is executed.
+         * @param {Object} scriptContext.request - The HTTP request object.
+         * @param {Object} scriptContext.response - The HTTP response object.
+         *
+         * @returns {void} This function does not return any value.
+         *
+         * @throws {Error} Will log any error that occurs during the execution of the script. 
+        */
+
         const eligibleBloodDonorsForm = (scriptContext) => {
             try {
 
