@@ -1,0 +1,4 @@
+<manifest projecttype="ACCOUNTCUSTOMIZATION">
+  <projectname>OTP-7876 Search through the database to find the matching blood donors</projectname>
+  <frameworkversion>1.0</frameworkversion>
+</manifest>
